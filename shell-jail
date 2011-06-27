@@ -71,3 +71,6 @@ grep "^root:\|^${user}:" /etc/passwd | \
 	> "${jail}/etc/passwd"
 grep "^root:\|^${user}:" /etc/passwd | \
 	awk -F: '{print $1 ":" $2 ":" $4 ":"}' > "${jail}/etc/group"
+
+# Create default shell for user.
+ln -nfs ${shell} "${jail}/bin/sh"
