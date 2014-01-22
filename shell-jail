@@ -60,7 +60,7 @@ echo ${COMMANDS} | xargs ldd | tr -s ' ' | \
     tar -ch -f - -T - | tar -C "${jail}" -xvf - | sed 's/^/\t/'
 
 echo "copying required devices"
-echo ${COMMANDS} | xargs strings | grep '^/dev/' | sort -u | \
+echo ${COMMANDS} | xargs strings | grep '^/dev/.\+' | sort -u | \
     tar -ch -f - -T - | tar -C "${jail}" -xvf - | sed 's/^/\t/'
 
 echo "copying extra files"
