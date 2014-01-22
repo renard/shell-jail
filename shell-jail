@@ -62,6 +62,11 @@ echo "copying required devices"
 echo ${COMMANDS} | xargs strings | grep '^/dev/' | sort -u | \
 	tar -ch -f - -T - | tar -C "${jail}" -xvf - | sed 's/^/\t/'
 
+echo "copying extra files"
+for dir in ${EXTRA_FILES_DIRS}; do
+        tar -C "$dir" -cf - . | tar -C "${jail}" -xvf - | sed 's/^/\t/'
+done
+
 echo "copying NSS info"
 mkdir -p "${jail}/etc"
 tar -cf - /lib/libnss_compat* /lib/libnss_files* | \
