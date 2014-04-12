@@ -72,7 +72,7 @@ done
 
 echo "copying NSS info"
 mkdir -p "${jail}/etc"
-tar -cf - /lib/libnss_compat* /lib/libnss_files* | \
+tar -cf - /lib/**/libnss_compat* /lib/**/libnss_files* | \
     tar -C "${jail}" -xvf - |sed 's/^/\t/'
 grep "^root:\|^${user}:" /etc/passwd | \
     awk -F: '{print $1 ":" $2 ":" $3 ":" $4 ":" $1 ":/:/dev/null" }' \
