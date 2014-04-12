@@ -54,6 +54,11 @@ rm -fvr ${jail}/{bin,etc,dev,lib,usr}
 echo "copying requiered commands and files"
 tar -cf - ${COMMANDS} | tar -C "${jail}" -xvf - | sed 's/^/\t/'
 
+if ! test -z "${EXTRA}"; then
+    echo "copying extra files files"
+    tar -chf - ${EXTRA} | tar -C "${jail}" -xvf - | sed 's/^/\t/'
+fi
+
 echo "copying required libs"
 echo ${COMMANDS} | xargs ldd | tr -s ' ' | \
     sed -n 's,.*[[:space:]]\(/.*\)[[:space:]]\+(.*,\1,p' | \
