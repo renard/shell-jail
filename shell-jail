@@ -48,7 +48,7 @@ done
 chown root.root "${jail}"
 
 echo "Purging old jail in ${jail}"
-find {bin,etc,dev,lib,usr}  -type f -or -type d | xargs chattr -V -i
+find ${jail}{bin,etc,dev,lib,usr}  -type f -or -type d -print0 | xargs -0 chattr -V -i
 rm -fvr ${jail}/{bin,etc,dev,lib,usr}
 
 echo "copying requiered commands and files"
@@ -83,4 +83,4 @@ grep "^root:\|^${user}:" /etc/passwd | \
 # Create default shell for user.
 ln -nfs ${shell} "${jail}/bin/sh"
 
-find {bin,etc,dev,lib,usr}  -type f -or -type d | xargs chattr -V +i
+find ${jail}/{bin,etc,dev,lib,usr}  -type f -or -type d -print0  | xargs chattr -V +i
